@@ -73,7 +73,7 @@
 
             <div class="flex items-center space-x-2">
                 <!-- Arcade Return Button -->
-                <a href="https://jojosarcade.vercel.app/" class="flex items-center space-x-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-xl text-xs font-medium transition-all border border-slate-700/80 shadow-sm">
+                <a href="https://jojosarcade.vercel.app/" class="arcade-back-btn flex items-center space-x-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-xl text-xs font-medium transition-all border border-slate-700/80 shadow-sm">
                     <i class="fa-solid fa-arrow-left text-[10px]"></i>
                     <span class="hidden sm:inline">Retour à l'arcade</span>
                     <span class="sm:hidden">Arcade</span>
@@ -232,10 +232,16 @@
                 <span class="text-slate-500 text-xs"> / 500 pts</span>
             </div>
 
-            <button onclick="restartGame()" class="w-full py-3.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-2xl shadow-lg shadow-indigo-600/30 transition-all text-sm flex items-center justify-center space-x-2">
-                <i class="fa-solid fa-rotate-right"></i>
-                <span>Rejouer une partie</span>
-            </button>
+            <div class="space-y-3">
+                <button onclick="restartGame()" class="w-full py-3.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-2xl shadow-lg shadow-indigo-600/30 transition-all text-sm flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>Rejouer une partie</span>
+                </button>
+                <a href="https://jojosarcade.vercel.app/" class="arcade-back-btn w-full py-3.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-2xl border border-slate-700/80 transition-all text-sm flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Retour à l'arcade</span>
+                </a>
+            </div>
         </div>
 
     </main>
@@ -248,6 +254,21 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script>
+        // --- REDIRECTION ARCADE ---
+        function redirectToArcade() {
+            const gameId = 1; // Le Juste Code Couleur Game ID
+            const finalScore = Math.floor(totalScore);
+            window.location.href = `https://jojosarcade.vercel.app/?gameId=${gameId}&score=${finalScore}`;
+        }
+
+        // Wire up all "Return to Arcade" buttons
+        document.querySelectorAll('.arcade-back-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                redirectToArcade();
+            });
+        });
+
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playSound(type) {
             if (!audioCtx) return;
